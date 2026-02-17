@@ -8,4 +8,4 @@ def send_telegram(text: str) -> None:
     r.raise_for_status()
 
 # test:
-send_telegram("hello from python")
+# send_telegram("hello from python")
