@@ -14,6 +14,8 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from messengerBot import send_telegram
 
 # ----------------------------
 # Config
@@ -91,6 +93,7 @@ def scrape_profile(driver: webdriver.Safari, profile_url: str, already_count: in
     except TimeoutException:
         # Page didn’t render expected table
         return [], already_count
+        send_telegram('Error with Scrape')
 
     # Collect all rows once (across all tbodies)
     tbodies = driver.find_elements(By.XPATH, f'//*[@id="content"]/div[{div_num}]/table/tbody')
@@ -130,7 +133,12 @@ def scrapeRecruits(csvPath: str,isCommitted:bool,title,receverEmail: str) -> Non
     recruits = load_csv(csvPath)  # [(link, name, matchCount), ...]
 
     # Start one browser for all work
-    driver = webdriver.Safari()
+    # driver = webdriver.Safari()
+    options = Options()
+    options.add_argument("--headless")        # optional
+    options.add_argument("--no-sandbox")      # good for cron/mac mini
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)           # no service= needed
     email_chunks: List[str] = []
     updated_rows: List[Tuple[str, str, int]] = []
 
