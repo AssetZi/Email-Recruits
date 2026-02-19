@@ -4,6 +4,7 @@ from messengerBot import send_telegram
 
 # scrapeRecruits('2028test.csv',False,'2028 Test')
 
+
 scrapeRecruits('committed.csv',True, 'Committs')
 scrapeRecruits('2026.csv',False, '2026')
 scrapeRecruits('2027.csv',False, '2027')

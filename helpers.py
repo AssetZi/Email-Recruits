@@ -14,6 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
 # ----------------------------
 # Config
@@ -127,7 +128,12 @@ def scrapeRecruits(csvPath: str,isCommitted:bool,title) -> None:
     recruits = load_csv(csvPath)  # [(link, name, matchCount), ...]
 
     # Start one browser for all work
-    driver = webdriver.Safari()
+    # driver = webdriver.Safari()
+    options = Options()
+    options.add_argument("--headless")        # optional
+    options.add_argument("--no-sandbox")      # good for cron/mac mini
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)           # no service= needed
     email_chunks: List[str] = []
     updated_rows: List[Tuple[str, str, int]] = []
 
