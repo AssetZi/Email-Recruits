@@ -13,5 +13,5 @@ scrapeRecruits('2029.csv',False, '2029')
 
 sendDelong()
 
-send_telegram('Sent the mf Email ✅')
+send_telegram('Sent the Email ✅ -- Github pull works :D')
 
